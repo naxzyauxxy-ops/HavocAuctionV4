@@ -1,0 +1,196 @@
+# =====================================================
+#              HavocAuction - config.yml
+# =====================================================
+# Never paste this file publicly with real credentials in it.
+
+DEBUG: false
+
+DATABASE:
+  TYPE: "SQLITE" # SQLITE or MYSQL
+  MYSQL:
+    HOST: "127.0.0.1"
+    PORT: 3306
+    DATABASE: "havocauction"
+    USER: "CHANGE_ME"
+    PASSWORD: "CHANGE_ME"
+    USE-SSL: false
+
+AUCTION:
+  # How long a listing stays on the board. 604800 = 7 days.
+  DURATION-SECONDS: 604800
+  MIN-PRICE: 10.0
+  MAX-PRICE: 10000000000.0
+  # Live listings one player may hold. 0 = unlimited.
+  MAX-LISTINGS-PER-PLAYER: 0
+  # Charged to the seller when the listing is created, win or lose. 0 disables.
+  LISTING-FEE-PERCENT: 0.0
+  LISTING-FEE-FLAT: 0.0
+  # Cut taken from the sale price before the seller is paid.
+  TAX-PERCENT: 0.0
+  # Announce listings at or above this price. 0 disables.
+  BROADCAST-PRICE-THRESHOLD: 500000.0
+  # Whether search also matches custom item names. Off by default: with it on, anyone
+  # can rename a block of dirt to "Elytra" and have it answer an elytra search.
+  # Searching always matches the real item type and the seller's name.
+  SEARCH-CUSTOM-NAMES: false
+  # Extra words a search should match for an item. Players look for "signed book", not
+  # "Written Book". Every word you type must match something, so "notch signed book"
+  # finds books signed by or sold by notch, not everything containing "book".
+  SEARCH-ALIASES:
+    WRITTEN_BOOK: [ "signed book", "book" ]
+    WRITABLE_BOOK: [ "book and quill", "unsigned book", "book" ]
+    ENCHANTED_BOOK: [ "enchanted book", "ebook", "book" ]
+    FILLED_MAP: [ "map art", "mapart", "map" ]
+    ELYTRA: [ "elytra", "wings" ]
+    TOTEM_OF_UNDYING: [ "totem", "pop" ]
+    ENDER_PEARL: [ "pearl", "pearls" ]
+    EXPERIENCE_BOTTLE: [ "xp bottle", "bottle o enchanting" ]
+    GOLDEN_APPLE: [ "gapple" ]
+    ENCHANTED_GOLDEN_APPLE: [ "god apple", "notch apple", "gapple" ]
+    NETHERITE_INGOT: [ "netherite", "ingot" ]
+    ANCIENT_DEBRIS: [ "debris", "netherite" ]
+    SHULKER_BOX: [ "shulker", "box" ]
+    NETHER_STAR: [ "star" ]
+    TRIDENT: [ "trident" ]
+    MACE: [ "mace" ]
+  # Show 1.23m instead of 1,230,000. Input always accepts both.
+  ABBREVIATE-NUMBERS: true
+  # Sold and collected rows are kept this long so the transaction log has something to
+  # show, then purged. They hold a serialised item each, so this is the memory dial.
+  HISTORY-KEEP-DAYS: 30
+  UPKEEP-SECONDS: 60
+  SAVE-INTERVAL-SECONDS: 30
+  # Re-read config.yml and dialogs.yml when they change on disk, so edits apply without
+  # a restart. 0 disables the watcher. Note this reloads settings and menu text only -
+  # it does not touch orders, listings or money.
+  RELOAD-WATCH-SECONDS: 5
+  # On startup, add any settings a plugin update introduced into your existing
+  # config.yml and dialogs.yml. Your values are never changed and nothing is removed;
+  # the previous file is kept as config.yml.bak. Turn off only if you manage the files
+  # yourself and would rather paste new keys in by hand.
+  AUTO-UPDATE-CONFIG: true
+  DROP:
+    MAX-STACKS-PER-TICK: 24
+    PAGE-BATCH: 5
+
+DIALOG:
+  # How every menu is drawn, for the whole server:
+  #   DIALOG - Minecraft's dialog windows. Private text fields, works on Bedrock via
+  #            Geyser, needs Paper 1.21.7+ and a 1.21.6+ client.
+  #   MODERN - classic chest menus. Works on any client, but text entry falls back to
+  #            chat, so searches are visible to chat-logging plugins.
+  UI-MODE: "DIALOG"
+  COLUMNS: 3
+  BUTTON-WIDTH: 200
+  ITEM-SIZE: 48
+  # Size of the item on the preview screen, and of each stack inside a container.
+  PREVIEW-ITEM-SIZE: 96
+  PREVIEW-CONTENT-SIZE: 40
+  # Cap on how many stacks a container preview draws.
+  PREVIEW-MAX-CONTENTS: 45
+  # Characters of a book's first page shown in the preview. 0 hides it.
+  PREVIEW-BOOK-CHARS: 160
+  # Seconds the map is placed in the player's off hand so they can see the art.
+  # A vanilla client cannot render map art any other way.
+  MAP-PREVIEW-SECONDS: 10
+  LISTINGS-PER-PAGE: 45
+  COLLECT-PER-PAGE: 45
+
+BLACKLIST-ITEMS:
+  - "COMMAND_BLOCK"
+  - "CHAIN_COMMAND_BLOCK"
+  - "REPEATING_COMMAND_BLOCK"
+  - "COMMAND_BLOCK_MINECART"
+  - "STRUCTURE_BLOCK"
+  - "STRUCTURE_VOID"
+  - "JIGSAW"
+  - "BARRIER"
+  - "LIGHT"
+  - "BEDROCK"
+  - "DEBUG_STICK"
+  - "KNOWLEDGE_BOOK"
+
+# Migration from the original DonutAuction plugin.
+# Drop its auction.db in here as the FILE below and start the server, or run /ah import.
+# Re-running is safe: legacy ids are preserved, so anything already imported is skipped.
+#
+# The importer moves no money and hands out no items. Sold rows import as history so the
+# transaction log and lifetime totals survive. Active listings go back on the board.
+# Cancelled and expired rows keep their items waiting for collection, as before.
+#
+# Remove the old plugin first so the two are not running against one economy.
+IMPORT:
+  ENABLED: true
+  FILE: "import.db"
+  # Sold/collected rows. Turn off for a clean start with no history.
+  IMPORT-HISTORY: true
+  IMPORT-PROFILES: true
+  EXPIRY:
+    # EXTEND: listings that expired while the old plugin was down go back on the board.
+    # KEEP:   they import as expired, item waiting for the seller to collect.
+    MODE: EXTEND
+    EXTEND-DAYS: 7
+  RENAME-WHEN-DONE: true
+
+# Text substituted into the *_status placeholders: green ON, red OFF.
+#
+# This string renders inside whatever menu plugin reads the placeholder, not here, so it
+# has to match that plugin's colour format. MiniMessage is the default because a settings
+# menu using <item:...> tags is MiniMessage-based. If the toggles show a literal
+# "<green>ON", comment these two out and uncomment one of the alternatives below.
+PLACEHOLDERS:
+  ENABLED-TEXT: "<green>ON"
+  DISABLED-TEXT: "<red>OFF"
+  # Legacy colour codes:
+  # ENABLED-TEXT: "&aON"
+  # DISABLED-TEXT: "&cOFF"
+  # Already-translated section signs:
+  # ENABLED-TEXT: "\u00a7aON"
+  # DISABLED-TEXT: "\u00a7cOFF"
+
+# Bedrock (Geyser/Floodgate) compatibility.
+# Chest menus render natively on Bedrock, so the only gap is the font: the small-caps
+# glyphs the menus use are not in it and show as boxes. Those are rewritten to plain
+# ASCII for Bedrock players only. Detection needs Floodgate.
+BEDROCK:
+  ASCII-LABELS: true
+
+MESSAGES:
+  PREFIX: ""
+  PROMPT-CHAT: "&#f40d0dType the {label} in chat, or 'cancel'."
+  SEARCHING: "&#f40d0dSearching for &f{query}&#f40d0d..."
+  MAP-PREVIEW-START: "&#f40d0dCheck your off hand - the map is yours to look at for {seconds}s."
+  MAP-PREVIEW-END: "&#f40d0dMap preview over."
+  SEARCH-USE-COMMAND: "&#f40d0dSearch box came back empty. Try &f/ah search <text>&#f40d0d instead."
+  SELL-USE-COMMAND: "&#f40d0dPrice box came back empty. Try &f/ah sell <price>&#f40d0d instead."
+  NO-PERMISSION: "&#f40d0dYou don't have permission to do that."
+  PLAYERS-ONLY: "&#f40d0dThis command can only be used by players."
+  RELOADED: "&#f40d0dConfiguration reloaded."
+  NO-ECONOMY: "&#f40d0dNo Vault economy provider is installed - the auction is disabled."
+  SELL-USAGE: "&#f40d0dUsage: /ah sell <price> &7(1k, 2.5m and so on work)"
+  NO-ITEM: "&#f40d0dHold the item you want to sell."
+  ITEM-BLACKLISTED: "&#f40d0dYou cannot sell that item."
+  PRICE-INVALID: "&#f40d0dThat is not a valid price."
+  PRICE-LOW: "&#f40d0dThe minimum price is ${min}."
+  PRICE-HIGH: "&#f40d0dThe maximum price is ${max}."
+  MAX-LISTINGS-LIMIT: "&#f40d0dYou cannot list more than {limit} items at once."
+  CANNOT-AFFORD-FEE: "&#f40d0dYou need ${fee} for the listing fee."
+  ECONOMY-ERROR-WITHDRAW: "&#f40d0dError while withdrawing money."
+  NOT-ENOUGH-MONEY: "&#f40d0dYou need ${price} to buy that."
+  INVENTORY-FULL: "&#f40d0dMake space in your inventory first."
+  LISTED: "&#f40d0dListed {amount} {item} for ${price}."
+  LISTING-BROADCAST: "&#f40d0d{player} &7listed &#f40d0d{amount} {item} &7for &#f40d0d${price}"
+  LISTING-UNAVAILABLE: "&#f40d0dThat listing is no longer available."
+  LISTING-CANCELLED: "&#f40d0dYou pulled {item} off the auction."
+  LISTING-COLLECTED: "&#f40d0dYou collected {amount} {item}."
+  LISTING-EXPIRED: "&#f40d0d{amount} of your listings expired. The items are waiting for you."
+  OWN-LISTING: "&#f40d0dYou cannot buy your own listing."
+  BUY-SUCCESS: "&#f40d0dYou bought {amount} {item} for ${price}."
+  SALE-NOTIFY: "&#f40d0d{buyer} bought your {item} for ${price} &7(you received ${payout})"
+  NOTHING-TO-COLLECT: "&#f40d0dNothing is waiting for you."
+  COLLECTED-ALL: "&#f40d0dCollected {amount} listings."
+  DROPPED-ALL: "&#f40d0dDropped {amount} items at your feet."
+  ALERTS-ON: "&#f40d0dYou will be told when your items sell."
+  ALERTS-OFF: "&#f40d0dSale notifications turned off."
+  FAST-BUY-ON: "&#f40d0dConfirmation screens off - buying and listing are instant."
+  FAST-BUY-OFF: "&#f40d0dConfirmation screens on."

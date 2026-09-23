@@ -1,0 +1,27 @@
+name: HavocAuction
+version: '${project.version}'
+main: net.eclipse.havocauction.HavocAuction
+api-version: '1.21'
+author: Eclipse
+description: Player auction house with a full chest-menu interface and Vault economy.
+softdepend: [Vault, PlaceholderAPI]
+commands:
+  auction:
+    description: Open the auction house
+    usage: /ah [<search text>|sell <price>|reload|import]
+    aliases: [ah, havocauction]
+  toggleauctionalerts:
+    description: Toggle auction sale notifications
+    usage: /toggleauctionalerts
+    aliases: [ahalerts]
+  togglefastauction:
+    description: Toggle auction confirmation screens
+    usage: /togglefastauction
+    aliases: [fastauction]
+permissions:
+  havocauction.use:
+    description: Allows using /ah
+    default: true
+  havocauction.admin:
+    description: Reload, import, bypass listing limits, cancel any listing
+    default: op
