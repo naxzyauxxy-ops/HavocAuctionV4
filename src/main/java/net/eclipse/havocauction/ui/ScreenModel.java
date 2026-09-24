@@ -31,13 +31,25 @@ public final class ScreenModel {
      * One button. {@code icon} is only used by the chest renderer; dialogs ignore it.
      * A null action means "just close".
      */
+    /**
+     * One button. {@code content} marks the repeating entries that fill a menu's content
+     * area; everything else is a control and needs a slot of its own in the layout.
+     * {@code icon} is only used by the chest renderer.
+     * A null action means "just close".
+     */
     public record Button(String key, String label, List<String> tooltip,
-                         ItemStack icon, Material fallbackIcon, Action action) {
+                         ItemStack icon, Material fallbackIcon, Action action, boolean content) {
 
         public static Button of(String key, String label, List<String> tooltip,
                                 ItemStack icon, Material fallbackIcon, Action action) {
+            return of(key, label, tooltip, icon, fallbackIcon, action, false);
+        }
+
+        public static Button of(String key, String label, List<String> tooltip,
+                                ItemStack icon, Material fallbackIcon, Action action,
+                                boolean content) {
             return new Button(key, label, tooltip == null ? List.of() : tooltip,
-                    icon, fallbackIcon, action);
+                    icon, fallbackIcon, action, content);
         }
     }
 

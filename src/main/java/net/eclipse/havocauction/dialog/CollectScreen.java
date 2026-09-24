@@ -96,7 +96,7 @@ public class CollectScreen extends Screen {
         List<ScreenModel.Button> buttons = new ArrayList<>();
 
         for (Listing listing : slice(results, session.getCollectPage(), perPage())) {
-            buttons.add(configButton("LOOT", Placeholders.of(plugin, listing),
+            buttons.add(entryButton("LOOT", Placeholders.of(plugin, listing),
                     listing.getItemCopy(), responses -> {
                 if (plugin.auction().collect(player, listing.getId())) success();
                 else deny();

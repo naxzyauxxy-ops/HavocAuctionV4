@@ -104,7 +104,7 @@ public class TransactionsScreen extends Screen {
 
         for (Listing listing : slice(results, session.getTransactionsPage(), perPage())) {
             boolean sold = listing.getSeller().equals(player.getUniqueId());
-            buttons.add(configButton(sold ? "SALE" : "PURCHASE", Placeholders.of(plugin, listing),
+            buttons.add(entryButton(sold ? "SALE" : "PURCHASE", Placeholders.of(plugin, listing),
                     listing.getItemCopy(), responses -> {
                         click();
                         show();

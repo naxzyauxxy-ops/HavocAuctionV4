@@ -72,16 +72,20 @@ public class Gui {
         view.inventory = inventory;
 
         // A menu can drop buttons it has no use for; they simply are not drawn.
+        // HIDDEN has to cover the footer button and the input prompts too, not just the
+        // screen's own buttons - those are still buttons competing for slots.
         List<String> hidden = layout == null ? List.of() : layout.getStringList("HIDDEN");
-        List<ScreenModel.Button> buttons = new ArrayList<>();
-        for (ScreenModel.Button button : screen.buttons()) {
-            if (!hidden.contains(button.key())) buttons.add(button);
-        }
+        List<ScreenModel.Button> candidates = new ArrayList<>(screen.buttons());
         for (ScreenModel.Input input : screen.inputs()) {
-            buttons.add(promptButton(screen, input));
+            candidates.add(promptButton(screen, input));
         }
         ScreenModel.Button exit = screen.exitButton();
-        if (exit != null) buttons.add(exit);
+        if (exit != null) candidates.add(exit);
+
+        List<ScreenModel.Button> buttons = new ArrayList<>();
+        for (ScreenModel.Button button : candidates) {
+            if (!hidden.contains(button.key())) buttons.add(button);
+        }
 
         Layout plan = Layout.read(layout, size);
         List<Integer> contentSlots = plan.content().isEmpty()
@@ -98,10 +102,16 @@ public class Gui {
         // Controls first: they have reserved slots, so paging never shifts them around.
         List<ScreenModel.Button> content = new ArrayList<>();
         for (ScreenModel.Button button : buttons) {
+            if (button.content()) {
+                content.add(button);
+                continue;
+            }
+
             Integer patterned = plan.slots().get(button.key());
             int slot = patterned != null ? patterned : slotFor(layout, button.key(), size);
             if (slot < 0) {
-                content.add(button);
+                // A control the layout has no place for. Dropping it into the content
+                // area would steal a slot from the listings, so it is simply not drawn.
                 continue;
             }
             place(inventory, view, slot, button);

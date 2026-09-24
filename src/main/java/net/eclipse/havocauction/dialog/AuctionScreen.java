@@ -134,7 +134,7 @@ public class AuctionScreen extends Screen {
         for (Listing listing : slice(results, session.getPage(), perPage())) {
             boolean mine = listing.getSeller().equals(player.getUniqueId());
             Map<String, String> placeholders = Placeholders.of(plugin, listing);
-            buttons.add(configButton(mine ? "OWN-LISTING" : "LISTING", placeholders,
+            buttons.add(entryButton(mine ? "OWN-LISTING" : "LISTING", placeholders,
                     listing.getItemCopy(), responses -> {
                 click();
                 // Your own listing goes to its management screen rather than a purchase

@@ -86,7 +86,7 @@ public class MyListingsScreen extends Screen {
         List<ScreenModel.Button> buttons = new ArrayList<>();
 
         for (Listing listing : slice(results, session.getMyListingsPage(), perPage())) {
-            buttons.add(configButton("LISTING", Placeholders.of(plugin, listing),
+            buttons.add(entryButton("LISTING", Placeholders.of(plugin, listing),
                     listing.getItemCopy(), responses -> {
                 click();
                 new ManageListingScreen(plugin, player, listing.getId()).show();

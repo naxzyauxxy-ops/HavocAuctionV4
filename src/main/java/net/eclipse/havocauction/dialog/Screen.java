@@ -202,6 +202,19 @@ public abstract class Screen {
         };
     }
 
+    /** A repeating entry: an order, a listing, a stack of loot. Fills the content area. */
+    protected ScreenModel.Button entryButton(String key, Map<String, String> placeholders,
+                                             ItemStack icon, ScreenModel.Action action) {
+        ScreenModel.Button base = configButton(key, placeholders, icon, action);
+        return ScreenModel.Button.of(base.key(), base.label(), base.tooltip(),
+                base.icon(), base.fallbackIcon(), base.action(), true);
+    }
+
+    protected ScreenModel.Button entryButton(String key, Map<String, String> placeholders,
+                                             ScreenModel.Action action) {
+        return entryButton(key, placeholders, null, action);
+    }
+
     /** A button with no action: closes the screen. */
     protected ScreenModel.Button closeButton(String key, Map<String, String> placeholders) {
         return configButton(key, placeholders, null, null);
