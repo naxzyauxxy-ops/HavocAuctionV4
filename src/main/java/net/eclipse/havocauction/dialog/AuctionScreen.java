@@ -172,6 +172,10 @@ public class AuctionScreen extends Screen {
             click();
             show();
         }));
+        buttons.add(configButton("REFRESH", screen, responses -> {
+            click();
+            show();
+        }));
         buttons.add(configButton("SEARCH", screen, responses -> {
             click();
             new SearchScreen(plugin, player, session.getQuery(), value -> {

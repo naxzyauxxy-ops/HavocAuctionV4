@@ -44,132 +44,127 @@ MENUS:
   AUCTION:
     TITLE: "&8▷ Auction House &8| &8({page}/{pages})"
     FILL: false
+    HIDDEN: [ FILTER, CLOSE, INFO ]
     STRUCTURE:
       - ". . . . . . . . ."
       - ". . . . . . . . ."
       - ". . . . . . . . ."
       - ". . . . . . . . ."
       - ". . . . . . . . ."
-      - "< o f s _ Y i c >"
+      - "Y o _ < r > s t _"
     CHARS:
       CONTENT: "."
-      PREVIOUS: "<"
-      NEXT: ">"
-      SORT: "o"
-      FILTER: "f"
-      SEARCH: "s"
       MY-LISTINGS: "Y"
-      INFO: "i"
-      CLOSE: "c"
-    EMPTY: "&7Nothing matches those filters."
-    BODY:
-      - "&8Description"
-      - ""
-      - "&6&lInformation:"
-      - "&fEverything players have listed"
-      - "&ffor sale right now."
-      - ""
-      - "&6&lThis Page:"
-      - "&a| &f{results} &7listings"
-      - "&a| &fpage {page}&7/&f{pages}"
-      - "&a| &a${balance} &7balance"
+      SORT: "o"
+      PREVIOUS: "<"
+      REFRESH: "r"
+      NEXT: ">"
+      SEARCH: "s"
+      TRANSACTIONS: "t"
+    EMPTY: "&7Nothing listed right now."
     ITEMS:
-      INFO:
-        MATERIAL: NETHER_STAR
-        NAME: "&6&lAUCTION HOUSE"
       LISTING:
-        NAME: "&6&l{amount}x {item}{renamed_tag}"
+        NAME: "&f{amount}x {item}{renamed_tag}"
         LORE:
-          - "&8{seller}"
-          - "{renamed_line}"
+          - "&8Description"
           - ""
-          - "&6&lInformation:"
-          - "&fA &f{type}&f, listed for sale."
+          - "&6Information:"
+          - "&fSold by &e{seller}"
+          - "&fPrice: &a${price}"
           - ""
-          - "&6&lPrice:"
-          - "&a| &a${price} &7total"
-          - "&a| &a${unit_price} &7each"
-          - "{durability_line}"
-          - "&a| &7{expires} &7remaining"
-          - ""
-          - "&e▶ Click to purchase"
+          - "&e▶ &6CLICK &eTo Buy"
       OWN-LISTING:
-        NAME: "&a&l{amount}x {item}{renamed_tag}"
+        NAME: "&f{amount}x {item}{renamed_tag}"
         LORE:
           - "&8Your listing"
-          - "{renamed_line}"
           - ""
-          - "&6&lPrice:"
-          - "&a| &a${price} &7total"
-          - "&a| &a${unit_price} &7each"
-          - "{durability_line}"
-          - "&a| &7{expires} &7remaining"
+          - "&6Information:"
+          - "&fPrice: &a${price}"
+          - "&fEnds in &e{expires}"
           - ""
-          - "&e▶ Click to manage"
+          - "&e▶ &6CLICK &eTo Manage"
+      MY-LISTINGS:
+        MATERIAL: BLACK_SHULKER_BOX
+        NAME: "&d&lYOUR ITEMS"
+        LORE:
+          - "&8Description"
+          - ""
+          - "&cInformation:"
+          - "&fClick to view the"
+          - "&fitems you have listed!"
+          - ""
+          - "&e▶ &6CLICK &eTo View"
       SORT:
         MATERIAL: HOPPER
         NAME: "&6&lAUCTION SORTING"
-        SELECTED-FORMAT: "&a| &a▶ {option}"
+        SELECTED-FORMAT: "&c| &a▶ {option}"
         UNSELECTED-FORMAT: "&c| &7▶ {option}"
         LORE:
           - "&8Description"
           - ""
-          - "&6&lInformation:"
+          - "&6Information:"
           - "&fChange how items are sorted"
           - "&fon the auction house boards"
           - ""
-          - "&6&lCurrent Selection:"
+          - "&6Current Selection:"
           - "{sort_options}"
-      FILTER:
-        MATERIAL: COMPASS
-        NAME: "&6&lCATEGORY FILTER"
-        SELECTED-FORMAT: "&a| &a▶ {option}"
-        UNSELECTED-FORMAT: "&c| &7▶ {option}"
-        LORE:
-          - "&8Description"
           - ""
-          - "&6&lInformation:"
-          - "&fShow only one kind of item"
-          - "&fon the auction house boards"
-          - ""
-          - "&6&lCurrent Selection:"
-          - "{filter_options}"
-      SEARCH:
-        MATERIAL: OAK_SIGN
-        NAME: "&6&lSEARCH LISTINGS"
-        LORE:
-          - "&8Description"
-          - ""
-          - "&6&lInformation:"
-          - "&fFind listings by item, seller"
-          - "&for the player who signed a book."
-          - ""
-          - "&6&lCurrent Selection:"
-          - "&a| &f{query}"
-          - ""
-          - "&e▶ Click to search"
-          - "&8Or use /ah <text>"
-      MY-LISTINGS:
-        MATERIAL: CHEST
-        NAME: "&6&lYOUR ACTIVE LISTINGS"
-        LORE:
-          - "&8Description"
-          - ""
-          - "&6&lInformation:"
-          - "&fItems you have on sale, plus"
-          - "&fyour history and settings."
+          - "&e▶ &6CLICK &eTo Change"
       PREVIOUS:
         MATERIAL: ARROW
-        NAME: "&6&lPREVIOUS PAGE"
-        LORE: [ "&8Page {previous} of {pages}" ]
+        NAME: "&c&lPREVIOUS PAGE"
+        LORE:
+          - "&8Description"
+          - ""
+          - "&cInformation:"
+          - "&fClick here to navigate"
+          - "&fto the previous page!"
+          - ""
+          - "&e▶ &6CLICK &eTo Navigate"
+      REFRESH:
+        MATERIAL: ENDER_EYE
+        NAME: "&a&lAUCTION"
+        LORE:
+          - "&8Description"
+          - ""
+          - "&aInformation:"
+          - "&fClick here to"
+          - "&frefresh the auction gui"
+          - ""
+          - "&e▶ &6CLICK &eTo Refresh"
       NEXT:
         MATERIAL: ARROW
-        NAME: "&6&lNEXT PAGE"
-        LORE: [ "&8Page {next} of {pages}" ]
-      CLOSE:
-        MATERIAL: BARRIER
-        NAME: "&c&lCLOSE"
-        LORE: [ ]
+        NAME: "&a&lNEXT PAGE"
+        LORE:
+          - "&8Description"
+          - ""
+          - "&aInformation:"
+          - "&fClick here to navigate"
+          - "&fto the next page!"
+          - ""
+          - "&e▶ &6CLICK &eTo Navigate"
+      SEARCH:
+        MATERIAL: OAK_SIGN
+        NAME: "&a&lSEARCH"
+        LORE:
+          - "&8Description"
+          - ""
+          - "&aInformation:"
+          - "&fClick here to"
+          - "&fsearch any item"
+          - ""
+          - "&e▶ &6CLICK &eTo Search"
+      TRANSACTIONS:
+        MATERIAL: WRITABLE_BOOK
+        NAME: "&b&lTRANSACTIONS"
+        LORE:
+          - "&8Description"
+          - ""
+          - "&bInformation:"
+          - "&fClick to view your"
+          - "&fauction history!"
+          - ""
+          - "&e▶ &6CLICK &eTo View"
 
   SEARCH:
     TITLE: "&8▷ Auction House &8| &8Search"
@@ -217,12 +212,13 @@ MENUS:
         LORE: [ ]
 
   CONFIRM-PURCHASE:
-    TITLE: "&8▷ Auction House &8| &8Confirm Purchase"
+    TITLE: "&8▷ Auction House &8| &8Confirm Gui"
     FILL: false
+    HIDDEN: [ INFO ]
     STRUCTURE:
-      - "_ _ _ i _ _ _ _ _"
-      - "_ _ v _ p _ x _ _"
       - "_ _ _ _ _ _ _ _ _"
+      - "_ _ x _ i _ v _ _"
+      - "_ _ _ _ p _ _ _ _"
     CHARS:
       CONTENT: "."
       INFO: "i"
@@ -230,33 +226,44 @@ MENUS:
       PREVIEW: "p"
       BACK: "x"
     BODY:
-      - "&8{seller}"
-      - "{renamed_line}"
+      - "&8Description"
       - ""
-      - "&6&lInformation:"
-      - "&fA &f{type}&f, listed for sale."
-      - "{durability_line}"
-      - ""
-      - "&6&lPrice:"
-      - "&a| &a${price} &7total"
-      - "&a| &a${unit_price} &7each"
-      - ""
-      - "&6&lYour Balance:"
-      - "&a| &a${balance} &7now"
-      - "&a| &a${after} &7after"
+      - "&6Information:"
+      - "&fSold by &e{seller}"
+      - "&fPrice: &a${price}"
+      - "&fYour balance after: &a${after}"
     ITEMS:
       CONFIRM:
-        MATERIAL: LIME_DYE
+        MATERIAL: LIME_STAINED_GLASS_PANE
         NAME: "&a&lCONFIRM BUY"
-        LORE: [ "&e▶ Buy for &a${price}" ]
+        LORE:
+          - "&8Description"
+          - ""
+          - "&aInformation:"
+          - "&fBuy this for &a${price}"
+          - ""
+          - "&e▶ &6CLICK &eTo Buy"
       PREVIEW:
         MATERIAL: SPYGLASS
-        NAME: "&6&lINSPECT ITEM"
-        LORE: [ "&e▶ Contents, map art, enchants" ]
+        NAME: "&e&lINSPECT ITEM"
+        LORE:
+          - "&8Description"
+          - ""
+          - "&6Information:"
+          - "&fSee what is inside before"
+          - "&fyou spend anything"
+          - ""
+          - "&e▶ &6CLICK &eTo Inspect"
       BACK:
-        MATERIAL: ARROW
+        MATERIAL: RED_STAINED_GLASS_PANE
         NAME: "&c&lCANCEL"
-        LORE: [ ]
+        LORE:
+          - "&8Description"
+          - ""
+          - "&cInformation:"
+          - "&fGo back without buying"
+          - ""
+          - "&e▶ &6CLICK &eTo Cancel"
 
   CONTAINER-PREVIEW:
     TITLE: "&8▷ Auction House &8| &8Preview"
@@ -343,13 +350,9 @@ MENUS:
     BODY:
       - "&8Description"
       - ""
-      - "&6&lInformation:"
-      - "&fItems you currently have on sale."
-      - ""
-      - "&6&lThis Page:"
-      - "&a| &f{count} &7live listings"
-      - "&a| &a${value} &7total value"
-      - "&a| &f{collectable} &7waiting to collect"
+      - "&6Information:"
+      - "&f{count} listings worth &a${value}"
+      - "&f{collectable} waiting to collect"
     ITEMS:
       INFO:
         MATERIAL: CHEST
@@ -362,7 +365,6 @@ MENUS:
           - ""
           - "&6&lPrice:"
           - "&a| &a${price} &7total"
-          - "&a| &a${unit_price} &7each"
           - "{durability_line}"
           - "&a| &7{expires} &7remaining"
           - ""
@@ -436,7 +438,6 @@ MENUS:
       - ""
       - "&6&lPrice:"
       - "&a| &a${price} &7total"
-      - "&a| &a${unit_price} &7each"
       - "{durability_line}"
       - "&a| &7{expires} &7remaining"
     ITEMS:
@@ -480,7 +481,6 @@ MENUS:
       - ""
       - "&6&lCurrent Selection:"
       - "&a| &a${price} &7asking"
-      - "&a| &a${unit_price} &7each"
       - "&a| &c${fee} &7listing fee"
       - "&a| &a${payout} &7you receive"
       - "&8After ${tax} tax"
@@ -513,11 +513,11 @@ MENUS:
         LORE: [ ]
 
   CONFIRM-LISTING:
-    TITLE: "&8▷ Auction House &8| &8Confirm Listing"
+    TITLE: "&8▷ Auction House &8| &8Confirm Gui"
     FILL: false
     STRUCTURE:
-      - "_ _ _ i _ _ _ _ _"
-      - "_ _ v _ _ _ x _ _"
+      - "_ _ _ _ _ _ _ _ _"
+      - "_ _ x _ i _ v _ _"
       - "_ _ _ _ _ _ _ _ _"
     CHARS:
       CONTENT: "."
@@ -536,11 +536,11 @@ MENUS:
       - "&a| &a${payout} &7you receive on sale"
     ITEMS:
       CONFIRM:
-        MATERIAL: LIME_DYE
+        MATERIAL: LIME_STAINED_GLASS_PANE
         NAME: "&a&lCONFIRM SALE"
         LORE: [ ]
       BACK:
-        MATERIAL: ARROW
+        MATERIAL: RED_STAINED_GLASS_PANE
         NAME: "&c&lABORT"
         LORE: [ ]
 

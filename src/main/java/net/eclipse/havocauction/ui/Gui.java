@@ -71,7 +71,12 @@ public class Gui {
                 Text.component(screen.style().text(screen.title())));
         view.inventory = inventory;
 
-        List<ScreenModel.Button> buttons = new ArrayList<>(screen.buttons());
+        // A menu can drop buttons it has no use for; they simply are not drawn.
+        List<String> hidden = layout == null ? List.of() : layout.getStringList("HIDDEN");
+        List<ScreenModel.Button> buttons = new ArrayList<>();
+        for (ScreenModel.Button button : screen.buttons()) {
+            if (!hidden.contains(button.key())) buttons.add(button);
+        }
         for (ScreenModel.Input input : screen.inputs()) {
             buttons.add(promptButton(screen, input));
         }
