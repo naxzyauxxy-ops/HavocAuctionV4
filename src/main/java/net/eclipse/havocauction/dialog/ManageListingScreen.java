@@ -74,8 +74,7 @@ public class ManageListingScreen extends Screen {
         if (listing.isPreviewable()) {
             buttons.add(configButton("PREVIEW", placeholders, responses -> {
                 click();
-                new ContainerPreviewScreen(plugin, player, listingId,
-                        () -> new ManageListingScreen(plugin, player, listingId).show()).show();
+                plugin.mapPreview().show(player, listing.getItemCopy());
             }));
         }
         return buttons;

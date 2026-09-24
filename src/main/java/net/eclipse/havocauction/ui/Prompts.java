@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Prompts implements Listener {
 
-    private record Pending(String key, Screen screen) {
+    private record Pending(String key, Screen screen, java.util.function.Consumer<String> callback) {
     }
 
     private final HavocAuction plugin;
@@ -38,10 +38,24 @@ public class Prompts implements Listener {
     }
 
     public void request(Player player, ScreenModel.Input input, Screen screen) {
-        waiting.put(player.getUniqueId(), new Pending(input.key(), screen));
+        waiting.put(player.getUniqueId(), new Pending(input.key(), screen, null));
+        ask(player, Text.strip(input.label()));
+    }
+
+    /**
+     * Asks for one value and hands it straight to the caller, instead of storing it for
+     * a later button press. Used where a click should just mean "type this now".
+     */
+    public void request(Player player, String label, Screen screen,
+                        java.util.function.Consumer<String> callback) {
+        waiting.put(player.getUniqueId(), new Pending(label, screen, callback));
+        ask(player, label);
+    }
+
+    private void ask(Player player, String label) {
         player.closeInventory();
         player.sendMessage(Text.component(Text.apply(plugin.message("PROMPT-CHAT"),
-                Map.of("label", Text.strip(input.label())))));
+                Map.of("label", label))));
     }
 
     /** Values this player has typed, for actions to read. */
@@ -65,7 +79,12 @@ public class Prompts implements Listener {
         String message = PlainTextComponentSerializer.plainText().serialize(event.message()).trim();
 
         Bukkit.getScheduler().runTask(plugin, () -> {
-            if (!message.equalsIgnoreCase("cancel")) {
+            boolean cancelled = message.equalsIgnoreCase("cancel");
+            if (pending.callback() != null) {
+                pending.callback().accept(cancelled ? "" : message);
+                return;
+            }
+            if (!cancelled) {
                 values.computeIfAbsent(player.getUniqueId(), key -> new HashMap<>())
                         .put(pending.key(), message);
             }

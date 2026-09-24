@@ -34,7 +34,9 @@ public class MyListingsScreen extends Screen {
     }
 
     private int perPage() {
-        return Math.max(1, plugin.getConfig().getInt("DIALOG.LISTINGS-PER-PAGE", 45));
+        // Your own listings are a short list, not a board: a handful at a time reads
+        // better than a wall of mostly-empty slots.
+        return Math.max(1, plugin.getConfig().getInt("DIALOG.MY-LISTINGS-PER-PAGE", 4));
     }
 
     private List<Listing> results() {
@@ -117,18 +119,6 @@ public class MyListingsScreen extends Screen {
         buttons.add(configButton("TRANSACTIONS", screen, responses -> {
             click();
             new TransactionsScreen(plugin, player).show();
-        }));
-        buttons.add(configButton("ALERTS", screen, responses -> {
-            boolean enabled = plugin.profiles().toggleAlerts(player.getUniqueId());
-            click();
-            tell(plugin.message(enabled ? "ALERTS-ON" : "ALERTS-OFF"));
-            show();
-        }));
-        buttons.add(configButton("FAST-BUY", screen, responses -> {
-            boolean enabled = plugin.profiles().toggleFastBuy(player.getUniqueId());
-            click();
-            tell(plugin.message(enabled ? "FAST-BUY-ON" : "FAST-BUY-OFF"));
-            show();
         }));
         return buttons;
     }

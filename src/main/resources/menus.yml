@@ -166,51 +166,6 @@ MENUS:
           - ""
           - "&e▶ &6CLICK &eTo View"
 
-  SEARCH:
-    TITLE: "&8▷ Auction House &8| &8Search"
-    FILL: false
-    STRUCTURE:
-      - "_ _ _ i _ _ _ _ _"
-      - "_ _ v _ q _ x _ _"
-      - "_ _ _ _ _ _ _ _ _"
-    CHARS:
-      CONTENT: "."
-      INFO: "i"
-      CONFIRM: "v"
-      INPUT: "q"
-      BACK: "x"
-      CLEAR: "z"
-    BODY:
-      - "&8Description"
-      - ""
-      - "&6&lInformation:"
-      - "&fTry: elytra, notch signed book,"
-      - "&fsharpness 5, map art"
-    INPUT-LABEL: "search"
-    ITEMS:
-      INFO:
-        MATERIAL: OAK_SIGN
-        NAME: "&6&lSEARCH"
-      CONFIRM:
-        MATERIAL: LIME_DYE
-        NAME: "&a&lSEARCH"
-        LORE: [ "&e▶ Run the search" ]
-      CLEAR:
-        MATERIAL: RED_DYE
-        NAME: "&c&lCLEAR"
-        LORE: [ ]
-      INPUT:
-        MATERIAL: NAME_TAG
-        NAME: "&6&lENTER TERM"
-        LORE:
-          - "&8Current: &f{query}"
-          - ""
-          - "&e▶ Click, then type in chat"
-      BACK:
-        MATERIAL: ARROW
-        NAME: "&c&lBACK"
-        LORE: [ ]
-
   CONFIRM-PURCHASE:
     TITLE: "&8▷ Auction House &8| &8Confirm Gui"
     FILL: false
@@ -245,15 +200,15 @@ MENUS:
           - "&e▶ &6CLICK &eTo Buy"
       PREVIEW:
         MATERIAL: SPYGLASS
-        NAME: "&e&lINSPECT ITEM"
+        NAME: "&e&lVIEW MAP ART"
         LORE:
           - "&8Description"
           - ""
           - "&6Information:"
-          - "&fSee what is inside before"
-          - "&fyou spend anything"
+          - "&fHolds the map for a few seconds"
+          - "&fso you can see the art"
           - ""
-          - "&e▶ &6CLICK &eTo Inspect"
+          - "&e▶ &6CLICK &eTo View"
       BACK:
         MATERIAL: RED_STAINED_GLASS_PANE
         NAME: "&c&lCANCEL"
@@ -265,76 +220,15 @@ MENUS:
           - ""
           - "&e▶ &6CLICK &eTo Cancel"
 
-  CONTAINER-PREVIEW:
-    TITLE: "&8▷ Auction House &8| &8Preview"
-    FILL: false
-    STRUCTURE:
-      - ". . . . . . . . ."
-      - ". . . . . . . . ."
-      - ". . . . . . . . ."
-      - ". . . . . . . . ."
-      - ". . . . . . . . ."
-      - "_ _ _ m i _ _ x _"
-    CHARS:
-      CONTENT: "."
-      INFO: "i"
-      VIEW-MAP: "m"
-      BACK: "x"
-    BODY:
-      - "&8{item}"
-      - "{renamed_line}"
-      - "{durability_line}"
-    LINE: "&a| &f{amount}x {item}"
-    ENCHANT-LINE: "&a| &f{enchantment} {level}"
-    MORE: "&8...and {count} more stacks"
-    BOOK-HEADER: "&6&lSigned Book:"
-    BOOK-HEADER-UNSIGNED: "&6&lBook and Quill:"
-    BOOK-LINES:
-      - "&a| &f{title}"
-      - "&a| &7Signed by &f{author}"
-      - "&a| &7{generation} &8• &f{pages} pages"
-    BOOK-LINES-UNSIGNED:
-      - "&a| &f{pages} pages"
-      - "&8Not signed, so it can still be edited."
-    BOOK-PAGE: "&8\"{page}\""
-    MAP-HEADER: "&6&lMap Art:"
-    MAP-HINT: "&fClick below to hold it and see the art."
-    MAP-LINES:
-      - "&a| &7Map &f#{id} &8• &7scale &f{scale}"
-      - "&a| &7{world} &8• &7locked &f{locked}"
-    EMPTY: "&7Nothing else to show for this item."
-    ITEMS:
-      INFO:
-        MATERIAL: SPYGLASS
-        NAME: "&6&lPREVIEW"
-      CONTENT:
-        NAME: "&f{amount}x {item}"
-        LORE: [ "&8Inside this container" ]
-      VIEW-MAP:
-        MATERIAL: FILLED_MAP
-        NAME: "&6&lVIEW MAP ART"
-        LORE:
-          - "&8Description"
-          - ""
-          - "&6&lInformation:"
-          - "&fPuts the map in your off hand"
-          - "&ffor a few seconds."
-          - "&8It cannot be dropped or kept."
-      BACK:
-        MATERIAL: ARROW
-        NAME: "&c&lCLOSE PREVIEW"
-        LORE: [ ]
-
   MY-LISTINGS:
-    TITLE: "&8▷ Auction House &8| &8Your Listings"
+    TITLE: "&8▷ Auction House &8| &8Your Items"
     FILL: false
+    HIDDEN: [ ALERTS, FAST-BUY, INFO ]
     STRUCTURE:
-      - ". . . . . . . . ."
-      - ". . . . . . . . ."
-      - ". . . . . . . . ."
-      - ". . . . . . . . ."
-      - ". . . . . . . . ."
-      - "< e g t i a b x >"
+      - "_ _ _ _ _ _ _ _ _"
+      - "_ . _ . _ . _ . _"
+      - "_ _ _ _ _ _ _ _ _"
+      - "< e _ g _ t _ x >"
     CHARS:
       CONTENT: "."
       PREVIOUS: "<"
@@ -342,82 +236,84 @@ MENUS:
       SELL: "e"
       COLLECT: "g"
       TRANSACTIONS: "t"
-      ALERTS: "a"
-      FAST-BUY: "b"
-      INFO: "i"
       BACK: "x"
     EMPTY: "&7You have nothing listed."
-    BODY:
-      - "&8Description"
-      - ""
-      - "&6Information:"
-      - "&f{count} listings worth &a${value}"
-      - "&f{collectable} waiting to collect"
     ITEMS:
-      INFO:
-        MATERIAL: CHEST
-        NAME: "&6&lYOUR LISTINGS"
       LISTING:
-        NAME: "&6&l{amount}x {item}"
+        NAME: "&f{amount}x {item}{renamed_tag}"
         LORE:
           - "&8Your listing"
-          - "{renamed_line}"
           - ""
-          - "&6&lPrice:"
-          - "&a| &a${price} &7total"
-          - "{durability_line}"
-          - "&a| &7{expires} &7remaining"
+          - "&6Information:"
+          - "&fPrice: &a${price}"
+          - "&fEnds in &e{expires}"
           - ""
-          - "&e▶ Click to manage"
+          - "&e▶ &6CLICK &eTo Manage"
       SELL:
         MATERIAL: EMERALD
         NAME: "&a&lLIST NEW ITEM"
         LORE:
           - "&8Description"
           - ""
-          - "&6&lInformation:"
-          - "&fLists whatever is in your hand."
-          - "&8Or use /ah sell <price>"
+          - "&aInformation:"
+          - "&fLists whatever is in your hand"
+          - "&fOr use /ah sell <price>"
+          - ""
+          - "&e▶ &6CLICK &eTo List"
       COLLECT:
         MATERIAL: CHEST_MINECART
         NAME: "&6&lCOLLECT &8({collectable})"
-        LORE: [ "&e▶ Items from cancelled listings" ]
+        LORE:
+          - "&8Description"
+          - ""
+          - "&6Information:"
+          - "&fItems from listings you pulled"
+          - "&for that ran out of time"
+          - ""
+          - "&e▶ &6CLICK &eTo Collect"
       TRANSACTIONS:
         MATERIAL: WRITABLE_BOOK
-        NAME: "&6&lTRANSACTION HISTORY"
-        LORE: [ "&e▶ Review sold and bought history" ]
-      ALERTS:
-        MATERIAL: BELL
-        NAME: "&6&lSALE ALERTS"
+        NAME: "&b&lTRANSACTIONS"
         LORE:
           - "&8Description"
           - ""
-          - "&6&lCurrent Selection:"
-          - "&a| &f{alerts}"
-      FAST-BUY:
-        MATERIAL: SUGAR
-        NAME: "&6&lFAST MODE"
-        LORE:
-          - "&8Description"
+          - "&bInformation:"
+          - "&fClick to view your"
+          - "&fauction history!"
           - ""
-          - "&6&lInformation:"
-          - "&fSkip confirmation screens."
-          - "&cNo second chances when on."
-          - ""
-          - "&6&lCurrent Selection:"
-          - "&a| &f{fast_buy}"
+          - "&e▶ &6CLICK &eTo View"
       PREVIOUS:
         MATERIAL: ARROW
-        NAME: "&6&lPREVIOUS PAGE"
-        LORE: [ ]
+        NAME: "&c&lPREVIOUS PAGE"
+        LORE:
+          - "&8Description"
+          - ""
+          - "&cInformation:"
+          - "&fClick here to navigate"
+          - "&fto the previous page!"
+          - ""
+          - "&e▶ &6CLICK &eTo Navigate"
       NEXT:
         MATERIAL: ARROW
-        NAME: "&6&lNEXT PAGE"
-        LORE: [ ]
+        NAME: "&a&lNEXT PAGE"
+        LORE:
+          - "&8Description"
+          - ""
+          - "&aInformation:"
+          - "&fClick here to navigate"
+          - "&fto the next page!"
+          - ""
+          - "&e▶ &6CLICK &eTo Navigate"
       BACK:
         MATERIAL: BARRIER
         NAME: "&c&lBACK"
-        LORE: [ ]
+        LORE:
+          - "&8Description"
+          - ""
+          - "&cInformation:"
+          - "&fReturn to the auction house"
+          - ""
+          - "&e▶ &6CLICK &eTo Go Back"
 
   MANAGE-LISTING:
     TITLE: "&8▷ Auction House &8| &8Your Listing"

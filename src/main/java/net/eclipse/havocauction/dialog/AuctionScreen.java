@@ -178,10 +178,10 @@ public class AuctionScreen extends Screen {
         }));
         buttons.add(configButton("SEARCH", screen, responses -> {
             click();
-            new SearchScreen(plugin, player, session.getQuery(), value -> {
+            plugin.prompts().request(player, "search", this, value -> {
                 session.setQuery(value);
                 new AuctionScreen(plugin, player).show();
-            }, () -> new AuctionScreen(plugin, player).show()).show();
+            });
         }));
         buttons.add(configButton("MY-LISTINGS", screen, responses -> {
             click();

@@ -94,6 +94,8 @@ DIALOG:
   # A vanilla client cannot render map art any other way.
   MAP-PREVIEW-SECONDS: 10
   LISTINGS-PER-PAGE: 45
+  # Your own listings are shown a few at a time rather than as a full board.
+  MY-LISTINGS-PER-PAGE: 4
   COLLECT-PER-PAGE: 45
 
 BLACKLIST-ITEMS:

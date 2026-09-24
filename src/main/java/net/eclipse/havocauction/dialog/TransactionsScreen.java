@@ -106,14 +106,8 @@ public class TransactionsScreen extends Screen {
             boolean sold = listing.getSeller().equals(player.getUniqueId());
             buttons.add(configButton(sold ? "SALE" : "PURCHASE", Placeholders.of(plugin, listing),
                     listing.getItemCopy(), responses -> {
-                        if (listing.isPreviewable()) {
-                            click();
-                            new ContainerPreviewScreen(plugin, player, listing.getId(),
-                                    () -> new TransactionsScreen(plugin, player).show()).show();
-                        } else {
-                            click();
-                            show();
-                        }
+                        click();
+                        show();
                     }));
         }
 
@@ -134,10 +128,10 @@ public class TransactionsScreen extends Screen {
 
         buttons.add(configButton("SEARCH", screen, responses -> {
             click();
-            new SearchScreen(plugin, player, session.getTransactionQuery(), value -> {
+            plugin.prompts().request(player, "player name", this, value -> {
                 session.setTransactionQuery(value);
                 new TransactionsScreen(plugin, player).show();
-            }, () -> new TransactionsScreen(plugin, player).show()).show();
+            });
         }));
         return buttons;
     }

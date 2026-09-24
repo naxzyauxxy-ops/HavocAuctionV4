@@ -301,15 +301,10 @@ public class Listing {
     }
 
     /**
-     * Whether the preview screen has anything to add: contents, map art, enchantments,
-     * or durability. Plain items do not get a preview button they would learn nothing from.
+     * Only map art is previewable. Everything else a player can judge from the item
+     * itself, and a preview button that shows nothing is worse than no button.
      */
     public boolean isPreviewable() {
-        if (isContainer() || isMap() || isBook() || hasDurability()) return true;
-        ItemStack item = getItem();
-        if (item.getItemMeta() instanceof EnchantmentStorageMeta storage) {
-            return storage.hasStoredEnchants();
-        }
-        return item.getItemMeta() != null && !item.getItemMeta().getEnchants().isEmpty();
+        return isMap();
     }
 }
