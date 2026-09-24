@@ -3,6 +3,7 @@ package net.eclipse.havocauction.dialog;
 import net.eclipse.havocauction.HavocAuction;
 import net.eclipse.havocauction.ui.ScreenModel;
 import net.eclipse.havocauction.model.Listing;
+import net.eclipse.havocauction.model.SortOption;
 import net.eclipse.havocauction.util.Category;
 import net.eclipse.havocauction.util.NumberUtil;
 import net.eclipse.havocauction.util.Text;
@@ -27,7 +28,7 @@ public class AuctionScreen extends Screen {
     }
 
     private int perPage() {
-        return Math.max(1, plugin.getConfig().getInt("DIALOG.LISTINGS-PER-PAGE", 21));
+        return Math.max(1, plugin.getConfig().getInt("DIALOG.LISTINGS-PER-PAGE", 45));
     }
 
     /**

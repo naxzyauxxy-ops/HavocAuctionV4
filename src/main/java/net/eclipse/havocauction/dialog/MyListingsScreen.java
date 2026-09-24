@@ -34,7 +34,7 @@ public class MyListingsScreen extends Screen {
     }
 
     private int perPage() {
-        return Math.max(1, plugin.getConfig().getInt("DIALOG.LISTINGS-PER-PAGE", 21));
+        return Math.max(1, plugin.getConfig().getInt("DIALOG.LISTINGS-PER-PAGE", 45));
     }
 
     private List<Listing> results() {

@@ -35,7 +35,7 @@ public class CollectScreen extends Screen {
     }
 
     private int perPage() {
-        return Math.max(1, plugin.getConfig().getInt("DIALOG.COLLECT-PER-PAGE", 15));
+        return Math.max(1, plugin.getConfig().getInt("DIALOG.COLLECT-PER-PAGE", 45));
     }
 
     private int pageBatch() {
